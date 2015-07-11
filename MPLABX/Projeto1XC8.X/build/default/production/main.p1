@@ -8054,7 +8054,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `ui
 ]
 [v _time `ui ~T0 @X0 1 e ]
-[; ;main.c: 19: unsigned int i=0, w=0, time;
+[v _temperatura `ui ~T0 @X0 1 e ]
+[; ;main.c: 19: unsigned int i=0, w=0, time, temperatura;
 "20
 [v _incrementa `ul ~T0 @X0 1 e ]
 [i _incrementa
@@ -8086,30 +8087,30 @@ Version 3.2 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ]
 [; ;main.c: 23: unsigned char comando[30], comand[30], c1=0;
-[v F5570 `(v ~T0 @X0 1 tf ]
-"25
-[v _interrupcao `IF5570 ~T0 @X0 1 e ]
+[v F5571 `(v ~T0 @X0 1 tf ]
+"26
+[v _interrupcao `IF5571 ~T0 @X0 1 e ]
 {
-[; ;main.c: 25: void interrupt interrupcao(){
+[; ;main.c: 26: void interrupt interrupcao(){
 [e :U _interrupcao ]
 [f ]
-[; ;main.c: 27: if (INTCONbits.TMR0IF) {
-"27
+[; ;main.c: 28: if (INTCONbits.TMR0IF) {
+"28
 [e $ ! != -> . . _INTCONbits 0 2 `i -> -> -> 0 `i `Vuc `i 883  ]
 {
-[; ;main.c: 28: INTCONbits.TMR0IF = 0;
-"28
-[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
-[; ;main.c: 29: i++; if(i>255){i=0;}
+[; ;main.c: 29: INTCONbits.TMR0IF = 0;
 "29
+[e = . . _INTCONbits 0 2 -> -> 0 `i `uc ]
+[; ;main.c: 30: i++; if(i>255){i=0;}
+"30
 [e ++ _i -> -> 1 `i `ui ]
 [e $ ! > _i -> -> 255 `i `ui 884  ]
 {
 [e = _i -> -> 0 `i `ui ]
 }
 [e :U 884 ]
-[; ;main.c: 30: if(i>=comand[1]){nivel_alto(31762);} else {nivel_baixo(31762);}
-"30
+[; ;main.c: 31: if(i>=comand[1]){nivel_alto(31762);} else {nivel_baixo(31762);}
+"31
 [e $ ! >= _i -> *U + &U _comand * -> -> -> 1 `i `ui `ux -> -> # *U &U _comand `ui `ux `ui 885  ]
 {
 [e ( _nivel_alto (1 -> -> 31762 `i `ui ]
@@ -8120,8 +8121,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_baixo (1 -> -> 31762 `i `ui ]
 }
 [e :U 886 ]
-[; ;main.c: 31: if(i>=comand[2]){nivel_alto(31760);} else {nivel_baixo(31760);}
-"31
+[; ;main.c: 32: if(i>=comand[2]){nivel_alto(31760);} else {nivel_baixo(31760);}
+"32
 [e $ ! >= _i -> *U + &U _comand * -> -> -> 2 `i `ui `ux -> -> # *U &U _comand `ui `ux `ui 887  ]
 {
 [e ( _nivel_alto (1 -> -> 31760 `i `ui ]
@@ -8132,8 +8133,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_baixo (1 -> -> 31760 `i `ui ]
 }
 [e :U 888 ]
-[; ;main.c: 32: if(i>=comand[3]){nivel_alto(31761);} else {nivel_baixo(31761);}
-"32
+[; ;main.c: 33: if(i>=comand[3]){nivel_alto(31761);} else {nivel_baixo(31761);}
+"33
 [e $ ! >= _i -> *U + &U _comand * -> -> -> 3 `i `ui `ux -> -> # *U &U _comand `ui `ux `ui 889  ]
 {
 [e ( _nivel_alto (1 -> -> 31761 `i `ui ]
@@ -8144,75 +8145,75 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_baixo (1 -> -> 31761 `i `ui ]
 }
 [e :U 890 ]
-[; ;main.c: 34: TMR0L = TMR0L + 16;
-"34
-[e = _TMR0L -> + -> _TMR0L `i -> 16 `i `uc ]
+[; ;main.c: 35: TMR0L = TMR0L + 16;
 "35
+[e = _TMR0L -> + -> _TMR0L `i -> 16 `i `uc ]
+"36
 }
 [e :U 883 ]
-[; ;main.c: 35: }
-[; ;main.c: 37: if (PIR1bits.RCIF) { INTCONbits.TMR0IE = 0;
-"37
+[; ;main.c: 36: }
+[; ;main.c: 38: if (PIR1bits.RCIF) { INTCONbits.TMR0IE = 0;
+"38
 [e $ ! != -> . . _PIR1bits 0 5 `i -> -> -> 0 `i `Vuc `i 891  ]
 {
 [e = . . _INTCONbits 0 5 -> -> 0 `i `uc ]
-[; ;main.c: 38: PIR1bits.RCIF=0;
-"38
-[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
-[; ;main.c: 39: comando[n] = ReadUSART();
+[; ;main.c: 39: PIR1bits.RCIF=0;
 "39
-[e = *U + &U _comando * -> _n `ux -> -> # *U &U _comando `ui `ux ( _ReadUSART ..  ]
-[; ;main.c: 40: if (comando[n]==79) {flagb=1;n=0;}
+[e = . . _PIR1bits 0 5 -> -> 0 `i `uc ]
+[; ;main.c: 40: comando[n] = ReadUSART();
 "40
+[e = *U + &U _comando * -> _n `ux -> -> # *U &U _comando `ui `ux ( _ReadUSART ..  ]
+[; ;main.c: 41: if (comando[n]==79) {flagb=1;n=0;}
+"41
 [e $ ! == -> *U + &U _comando * -> _n `ux -> -> # *U &U _comando `ui `ux `i -> 79 `i 892  ]
 {
 [e = _flagb -> -> 1 `i `s ]
 [e = _n -> -> 0 `i `uc ]
 }
 [e :U 892 ]
-[; ;main.c: 42: if (m>13 && comando[0]==65) {m=n; flag=1;}
-"42
+[; ;main.c: 43: if (m>13 && comando[0]==65) {m=n; flag=1;}
+"43
 [e $ ! && > -> _m `i -> 13 `i == -> *U + &U _comando * -> -> -> 0 `i `ui `ux -> -> # *U &U _comando `ui `ux `i -> 65 `i 893  ]
 {
 [e = _m _n ]
 [e = _flag -> -> 1 `i `s ]
 }
 [e :U 893 ]
-[; ;main.c: 44: if (comando[n]=='R'){n=0;comando[0] = 'R';}
-"44
+[; ;main.c: 45: if (comando[n]=='R'){n=0;comando[0] = 'R';}
+"45
 [e $ ! == -> *U + &U _comando * -> _n `ux -> -> # *U &U _comando `ui `ux `ui -> 82 `ui 894  ]
 {
 [e = _n -> -> 0 `i `uc ]
 [e = *U + &U _comando * -> -> -> 0 `i `ui `ux -> -> # *U &U _comando `ui `ux -> -> 82 `ui `uc ]
 }
 [e :U 894 ]
-[; ;main.c: 46: if (n>=3 && comando[0]=='R') {
-"46
+[; ;main.c: 47: if (n>=3 && comando[0]=='R') {
+"47
 [e $ ! && >= -> _n `i -> 3 `i == -> *U + &U _comando * -> -> -> 0 `i `ui `ux -> -> # *U &U _comando `ui `ux `ui -> 82 `ui 895  ]
 {
-[; ;main.c: 47: comand[1]= comando[1];
-"47
-[e = *U + &U _comand * -> -> -> 1 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 1 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
-[; ;main.c: 48: comand[2]= comando[2];
+[; ;main.c: 48: comand[1]= comando[1];
 "48
-[e = *U + &U _comand * -> -> -> 2 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 2 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
-[; ;main.c: 49: comand[3]= comando[3];
+[e = *U + &U _comand * -> -> -> 1 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 1 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
+[; ;main.c: 49: comand[2]= comando[2];
 "49
-[e = *U + &U _comand * -> -> -> 3 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 3 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
-[; ;main.c: 50: n=0; comando[0] = 32;
+[e = *U + &U _comand * -> -> -> 2 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 2 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
+[; ;main.c: 50: comand[3]= comando[3];
 "50
+[e = *U + &U _comand * -> -> -> 3 `i `ui `ux -> -> # *U &U _comand `ui `ux *U + &U _comando * -> -> -> 3 `i `ui `ux -> -> # *U &U _comando `ui `ux ]
+[; ;main.c: 51: n=0; comando[0] = 32;
+"51
 [e = _n -> -> 0 `i `uc ]
 [e = *U + &U _comando * -> -> -> 0 `i `ui `ux -> -> # *U &U _comando `ui `ux -> -> 32 `i `uc ]
-[; ;main.c: 51: inverte_saida(31759); INTCONbits.TMR0IE = 1;
-"51
+[; ;main.c: 52: inverte_saida(31759); INTCONbits.TMR0IE = 1;
+"52
 [e ( _inverte_saida (1 -> -> 31759 `i `ui ]
 [e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-"52
+"53
 }
 [e :U 895 ]
-[; ;main.c: 52: }
-[; ;main.c: 53: ++n; m=n; if(n>=29){n=0;}
-"53
+[; ;main.c: 53: }
+[; ;main.c: 54: ++n; m=n; if(n>=29){n=0;}
+"54
 [e =+ _n -> -> 1 `i `uc ]
 [e = _m _n ]
 [e $ ! >= -> _n `i -> 29 `i 896  ]
@@ -8220,20 +8221,20 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _n -> -> 0 `i `uc ]
 }
 [e :U 896 ]
-[; ;main.c: 55: switch (comando[0]){
-"55
+[; ;main.c: 56: switch (comando[0]){
+"56
 [e $U 898  ]
 {
-[; ;main.c: 56: case 79 : {flag=0; chegou=1;m=0;}
-"56
+[; ;main.c: 57: case 79 : {flag=0; chegou=1;m=0;}
+"57
 [e :U 899 ]
 {
 [e = _flag -> -> 0 `i `s ]
 [e = _chegou -> -> 1 `i `s ]
 [e = _m -> -> 0 `i `uc ]
 }
-[; ;main.c: 58: case 'L' : {flag=0; n=0; c=1; nivel_alto(31759); envia=1;}
-"58
+[; ;main.c: 59: case 'L' : {flag=0; n=0; c=1; nivel_alto(31759); envia=1;}
+"59
 [e :U 900 ]
 {
 [e = _flag -> -> 0 `i `s ]
@@ -8242,11 +8243,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_alto (1 -> -> 31759 `i `ui ]
 [e = _envia -> -> 1 `i `s ]
 }
-[; ;main.c: 59: break;
-"59
-[e $U 897  ]
-[; ;main.c: 60: case 'D' : {flag=0; n=0; nivel_baixo(31759); envia=0;}
+[; ;main.c: 60: break;
 "60
+[e $U 897  ]
+[; ;main.c: 61: case 'D' : {flag=0; n=0; nivel_baixo(31759); envia=0;}
+"61
 [e :U 901 ]
 {
 [e = _flag -> -> 0 `i `s ]
@@ -8254,11 +8255,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_baixo (1 -> -> 31759 `i `ui ]
 [e = _envia -> -> 0 `i `s ]
 }
-[; ;main.c: 61: break;
-"61
-[e $U 897  ]
-[; ;main.c: 62: case 'P': { flag=0; n=0; nivel_alto(31759);envia=0;}
+[; ;main.c: 62: break;
 "62
+[e $U 897  ]
+[; ;main.c: 63: case 'P': { flag=0; n=0; nivel_alto(31759);envia=0;}
+"63
 [e :U 902 ]
 {
 [e = _flag -> -> 0 `i `s ]
@@ -8266,11 +8267,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _nivel_alto (1 -> -> 31759 `i `ui ]
 [e = _envia -> -> 0 `i `s ]
 }
-[; ;main.c: 63: break;
-"63
-[e $U 897  ]
-[; ;main.c: 64: case 'T': {flag=0; n=0; inverte_saida(31759); envia=0;}
+[; ;main.c: 64: break;
 "64
+[e $U 897  ]
+[; ;main.c: 65: case 'T': {flag=0; n=0; inverte_saida(31759); envia=0;}
+"65
 [e :U 903 ]
 {
 [e = _flag -> -> 0 `i `s ]
@@ -8278,14 +8279,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _inverte_saida (1 -> -> 31759 `i `ui ]
 [e = _envia -> -> 0 `i `s ]
 }
-[; ;main.c: 65: break;
-"65
-[e $U 897  ]
+[; ;main.c: 66: break;
 "66
-}
-[; ;main.c: 66: }
 [e $U 897  ]
-"55
+"67
+}
+[; ;main.c: 67: }
+[e $U 897  ]
+"56
 [e :U 898 ]
 [e [\ *U + &U _comando * -> -> -> 0 `i `ui `ux -> -> # *U &U _comando `ui `ux , $ -> -> 79 `i `uc 899
  , $ -> -> 76 `ui `uc 900
@@ -8293,141 +8294,150 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 80 `ui `uc 902
  , $ -> -> 84 `ui `uc 903
  897 ]
-"66
-[e :U 897 ]
 "67
+[e :U 897 ]
+"68
 }
 [e :U 891 ]
-[; ;main.c: 67: }
 [; ;main.c: 68: }
-"68
+[; ;main.c: 69: }
+"69
 [e :UE 882 ]
 }
-"70
+"71
 [v _main `(v ~T0 @X0 1 ef ]
 {
-[; ;main.c: 70: void main(){
+[; ;main.c: 71: void main(){
 [e :U _main ]
 [f ]
-[; ;main.c: 72: clock_int_48MHz();
-"72
-[e ( _clock_int_48MHz ..  ]
-[; ;main.c: 73: habilita_interrupcao(0x9D20);
+[; ;main.c: 73: clock_int_48MHz();
 "73
-[e ( _habilita_interrupcao (1 -> 40224 `ui ]
-[; ;main.c: 74: taxa_serial(9600);
+[e ( _clock_int_48MHz ..  ]
+[; ;main.c: 74: habilita_interrupcao(0x9D20);
 "74
-[e ( _taxa_serial (1 -> -> -> 9600 `i `l `ul ]
-[; ;main.c: 75: bt_ini();
+[e ( _habilita_interrupcao (1 -> 40224 `ui ]
+[; ;main.c: 75: taxa_serial(9600);
 "75
-[e ( _bt_ini ..  ]
-[; ;main.c: 77: T0CON =0B11000001;
+[e ( _taxa_serial (1 -> -> -> 9600 `i `l `ul ]
+[; ;main.c: 76: habilita_canal_AD(0x0D);
+"76
+[e ( _habilita_canal_AD (1 -> -> 13 `i `uc ]
+[; ;main.c: 77: bt_ini();
 "77
-[e = _T0CON -> -> 193 `i `uc ]
-[; ;main.c: 78: TMR0L = 16;
-"78
-[e = _TMR0L -> -> 16 `i `uc ]
-[; ;main.c: 79: RCONbits.IPEN = 1;
+[e ( _bt_ini ..  ]
+[; ;main.c: 79: T0CON =0B11000001;
 "79
-[e = . . _RCONbits 5 7 -> -> 1 `i `uc ]
-[; ;main.c: 80: INTCONbits.GIEH = 1;
+[e = _T0CON -> -> 193 `i `uc ]
+[; ;main.c: 80: TMR0L = 16;
 "80
-[e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
-[; ;main.c: 81: INTCONbits.TMR0IE = 1;
+[e = _TMR0L -> -> 16 `i `uc ]
+[; ;main.c: 81: RCONbits.IPEN = 1;
 "81
-[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 83: while(1){
+[e = . . _RCONbits 5 7 -> -> 1 `i `uc ]
+[; ;main.c: 82: INTCONbits.GIEH = 1;
+"82
+[e = . . _INTCONbits 2 7 -> -> 1 `i `uc ]
+[; ;main.c: 83: INTCONbits.TMR0IE = 1;
 "83
+[e = . . _INTCONbits 0 5 -> -> 1 `i `uc ]
+[; ;main.c: 85: while(1){
+"85
 [e :U 906 ]
 {
-[; ;main.c: 84: if (PORTEbits.RE3==0){asm(" reset");}
-"84
+[; ;main.c: 86: if (PORTEbits.RE3==0){asm(" reset");}
+"86
 [e $ ! == -> . . _PORTEbits 0 3 `i -> 0 `i 908  ]
 {
 [; <"  reset ;# ">
 }
 [e :U 908 ]
-[; ;main.c: 85: if (envia){
-"85
+[; ;main.c: 87: if (envia){
+"87
 [e $ ! != -> _envia `i -> -> -> 0 `i `s `i 909  ]
 {
-[; ;main.c: 86: inverte_saida(31759);tempo_ms (500);
-"86
+[; ;main.c: 88: inverte_saida(31759);tempo_ms (500);
+"88
 [e ( _inverte_saida (1 -> -> 31759 `i `ui ]
 [e ( _tempo_ms (1 -> -> 500 `i `ui ]
-[; ;main.c: 87: sendrw((char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
-"87
-[e ( _sendrw (1 -> :s 1C `*uc ]
-[; ;main.c: 88: sendnum(39);
-"88
-[e ( _sendnum (1 -> -> 39 `i `ui ]
-[; ;main.c: 89: sendrw((char *)"&entry.1468266733=");
+[; ;main.c: 89: sendrw((char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
 "89
-[e ( _sendrw (1 -> :s 2C `*uc ]
-[; ;main.c: 90: sendnum(87);
+[e ( _sendrw (1 -> :s 1C `*uc ]
+[; ;main.c: 90: sendnum(le_AD10bits(0));
 "90
-[e ( _sendnum (1 -> -> 87 `i `ui ]
-[; ;main.c: 91: sendrw((char *)"&entry.1609904957=");
+[e ( _sendnum (1 ( _le_AD10bits (1 -> -> 0 `i `uc ]
+[; ;main.c: 91: sendrw((char *)"&entry.1468266733=");
 "91
-[e ( _sendrw (1 -> :s 3C `*uc ]
-[; ;main.c: 92: sendnum(41);
+[e ( _sendrw (1 -> :s 2C `*uc ]
+[; ;main.c: 92: temperatura=(420*le_AD10bits(1))/1023;
 "92
-[e ( _sendnum (1 -> -> 41 `i `ui ]
-[; ;main.c: 93: sendrw((char *)"&entry.1589284333=");
+[e = _temperatura / * -> -> 420 `i `ui ( _le_AD10bits (1 -> -> 1 `i `uc -> -> 1023 `i `ui ]
+[; ;main.c: 93: sendnum(temperatura);
 "93
-[e ( _sendrw (1 -> :s 4C `*uc ]
-[; ;main.c: 94: sendnum(incrementa);
+[e ( _sendnum (1 _temperatura ]
+[; ;main.c: 94: sendrw((char *)"&entry.1609904957=");
 "94
-[e ( _sendnum (1 -> _incrementa `ui ]
-[; ;main.c: 95: sendrw((char *)"&submit=Submit*");
+[e ( _sendrw (1 -> :s 3C `*uc ]
+[; ;main.c: 95: sendnum(41);
 "95
-[e ( _sendrw (1 -> :s 5C `*uc ]
-[; ;main.c: 96: for (i=0;i<5;i++)
+[e ( _sendnum (1 -> -> 41 `i `ui ]
+[; ;main.c: 96: sendrw((char *)"&entry.1589284333=");
 "96
+[e ( _sendrw (1 -> :s 4C `*uc ]
+[; ;main.c: 97: sendnum(incrementa);
+"97
+[e ( _sendnum (1 -> _incrementa `ui ]
+[; ;main.c: 98: sendrw((char *)"&submit=Submit*");
+"98
+[e ( _sendrw (1 -> :s 5C `*uc ]
+[; ;main.c: 99: for (i=0;i<5;i++)
+"99
 {
 [e = _i -> -> 0 `i `ui ]
 [e $ < _i -> -> 5 `i `ui 910  ]
 [e $U 911  ]
-"97
+"100
 [e :U 910 ]
-[; ;main.c: 97: {if (envia){
+[; ;main.c: 100: {if (envia){
 {
 [e $ ! != -> _envia `i -> -> -> 0 `i `s `i 913  ]
 {
-[; ;main.c: 98: n=0; tempo_ms(1000); inverte_saida(31759);}}
-"98
+[; ;main.c: 101: n=0; tempo_ms(100); inverte_saida(31759);}}
+"101
 [e = _n -> -> 0 `i `uc ]
-[e ( _tempo_ms (1 -> -> 1000 `i `ui ]
+[e ( _tempo_ms (1 -> -> 100 `i `ui ]
 [e ( _inverte_saida (1 -> -> 31759 `i `ui ]
 }
 [e :U 913 ]
 }
-"96
+"99
 [e ++ _i -> -> 1 `i `ui ]
 [e $ < _i -> -> 5 `i `ui 910  ]
 [e :U 911 ]
-"98
-}
 "101
 }
-[e :U 909 ]
-[; ;main.c: 101: }
-[; ;main.c: 103: ++incrementa;
-"103
-[e =+ _incrementa -> -> -> 1 `i `l `ul ]
-[; ;main.c: 104: n=0; tempo_ms(500);
+[; ;main.c: 104: envia=0;
 "104
-[e = _n -> -> 0 `i `uc ]
-[e ( _tempo_ms (1 -> -> 500 `i `ui ]
+[e = _envia -> -> 0 `i `s ]
+"105
+}
+[e :U 909 ]
+[; ;main.c: 105: }
+[; ;main.c: 107: ++incrementa;
 "107
+[e =+ _incrementa -> -> -> 1 `i `l `ul ]
+[; ;main.c: 108: n=0; tempo_ms(300);
+"108
+[e = _n -> -> 0 `i `uc ]
+[e ( _tempo_ms (1 -> -> 300 `i `ui ]
+"111
 }
 [e :U 905 ]
-"83
+"85
 [e $U 906  ]
 [e :U 907 ]
-[; ;main.c: 107: }
-[; ;main.c: 108: }
-"108
+[; ;main.c: 111: }
+[; ;main.c: 112: }
+"112
 [e :UE 904 ]
 }
 [a 1C 104 116 116 112 115 58 47 47 100 111 99 115 46 103 111 111 103 108 101 46 99 111 109 47 102 111 114 109 115 47 100 47 49 80 90 79 113 106 110 105 116 69 82 48 109 48 51 73 120 52 114 57 103 68 66 113 104 112 55 88 115 49 89 114 80 109 106 76 121 109 69 50 86 87 65 85 47 102 111 114 109 82 101 115 112 111 110 115 101 63 105 102 113 38 101 110 116 114 121 46 57 54 50 48 50 51 48 56 57 61 0 ]

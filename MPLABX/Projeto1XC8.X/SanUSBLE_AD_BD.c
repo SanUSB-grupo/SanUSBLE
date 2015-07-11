@@ -8,7 +8,7 @@ Gerenciador.hex de gravação USB em: https://dl.dropboxusercontent.com/u/10192238
 Este firmware envia os dados com sendnum que podem ser visualizados em:
 https://docs.google.com/spreadsheets/d/1tDX1NalMiKmKVawsHfS7hpAf7lB5ZeHpYu0nLmau-TE/edit#gid=1687639411
  */
-
+ 
 #define pinored pin_c2 //pinos para serem conectados ao led RGB
 #define pinoblue pin_c1
 #define pinogreen pin_c0
@@ -106,7 +106,7 @@ void main(){
 
       ++incrementa;
       n=0; tempo_ms(300);
-
-
+     
+ 
     }
 }

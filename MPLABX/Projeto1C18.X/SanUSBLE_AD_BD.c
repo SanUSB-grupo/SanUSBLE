@@ -1,4 +1,4 @@
-#include "SanUSB48X.h"
+#include "SanUSB48.h"
 #include "bt_usb.h"//Aplicativo: https://play.google.com/store/apps/details?id=p.b.le
 /*Vídeos BLE (Bluetooth Low Energy): https://www.youtube.com/watch?v=a-e88G_YEsI https://www.youtube.com/watch?v=Yi4e-Pt79EA , http://youtu.be/k4-Onma7Xgs e https://www.youtube.com/watch?v=ZRChNz9JO2M
 Baixar MPLABX C18 e outros: https://drive.google.com/?tab=wo&authuser=0#folders/0B5332OAhnMe2STE4MFNBQ2dqYWM
@@ -8,7 +8,7 @@ Gerenciador.hex de gravação USB em: https://dl.dropboxusercontent.com/u/10192238
 Este firmware envia os dados com sendnum que podem ser visualizados em:
 https://docs.google.com/spreadsheets/d/1tDX1NalMiKmKVawsHfS7hpAf7lB5ZeHpYu0nLmau-TE/edit#gid=1687639411
  */
-
+ 
 #define pinored pin_c2 //pinos para serem conectados ao led RGB
 #define pinoblue pin_c1
 #define pinogreen pin_c0
@@ -22,8 +22,8 @@ unsigned long int incrementa=0;
 short int  flag=0, flagstart=0, flagNM=0, vorbei=0;
 unsigned char comando[30], comand[30], c1=0;
 
-//#pragma interrupt interrupcao
-void interrupt interrupcao(){
+#pragma interrupt interrupcao
+void interrupcao(){
 
     if (INTCONbits.TMR0IF)     {  //espera o estouro do timer0 -> TMR0L=0
     INTCONbits.TMR0IF = 0;        //limpa a flag de interrupção
@@ -86,16 +86,16 @@ void main(){
     if (entrada_pin_e3==0){Reset();} //com interrupcao evitar no while, pois pode dar conflito com a gravacao
        if (envia){
        inverte_saida(pin_b7);tempo_ms (500);
-       sendrw((char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
+       sendrw((rom char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
        sendnum(le_AD10bits(0));
-       sendrw((char *)"&entry.1468266733=");
+       sendrw((rom char *)"&entry.1468266733=");
        temperatura=(420*le_AD10bits(1))/1023;
        sendnum(temperatura);
-       sendrw((char *)"&entry.1609904957=");
+       sendrw((rom char *)"&entry.1609904957=");
        sendnum(41);
-       sendrw((char *)"&entry.1589284333=");
+       sendrw((rom char *)"&entry.1589284333=");
        sendnum(incrementa);
-       sendrw((char *)"&submit=Submit*");
+       sendrw((rom char *)"&submit=Submit*");
         for (i=0;i<5;i++)
               {if (envia){
                n=0; tempo_ms(100); inverte_saida(pin_b7);}}
@@ -106,7 +106,7 @@ void main(){
 
       ++incrementa;
       n=0; tempo_ms(300);
-
-
+     
+ 
     }
 }

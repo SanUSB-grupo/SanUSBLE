@@ -6941,11 +6941,12 @@ serial_putc(hexChar);
 unsigned char valor,valorbcd, endereco, numquant=0, temp=0;
 unsigned char n=0, m=0, ind;
 short int envia=0;
-unsigned int i=0, w=0, time;
+unsigned int i=0, w=0, time, temperatura;
 unsigned long int incrementa=0;
 
 short int flag=0, flagstart=0, flagNM=0, vorbei=0;
 unsigned char comando[30], comand[30], c1=0;
+
 
 void interrupt interrupcao(){
 
@@ -6997,6 +6998,7 @@ void main(){
 clock_int_48MHz();
 habilita_interrupcao(0x9D20);
 taxa_serial(9600);
+habilita_canal_AD(0x0D);
 bt_ini();
 
 T0CON =0B11000001;
@@ -7010,9 +7012,10 @@ if (PORTEbits.RE3==0){asm(" reset");}
 if (envia){
 inverte_saida(31759);tempo_ms (500);
 sendrw((char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
-sendnum(39);
+sendnum(le_AD10bits(0));
 sendrw((char *)"&entry.1468266733=");
-sendnum(87);
+temperatura=(420*le_AD10bits(1))/1023;
+sendnum(temperatura);
 sendrw((char *)"&entry.1609904957=");
 sendnum(41);
 sendrw((char *)"&entry.1589284333=");
@@ -7020,13 +7023,14 @@ sendnum(incrementa);
 sendrw((char *)"&submit=Submit*");
 for (i=0;i<5;i++)
 {if (envia){
-n=0; tempo_ms(1000); inverte_saida(31759);}}
+n=0; tempo_ms(100); inverte_saida(31759);}}
 
 
+envia=0;
 }
 
 ++incrementa;
-n=0; tempo_ms(500);
+n=0; tempo_ms(300);
 
 
 }

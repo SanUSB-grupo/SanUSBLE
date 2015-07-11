@@ -8,7 +8,7 @@ Gerenciador.hex de gravação USB em: https://dl.dropboxusercontent.com/u/10192238
 Este firmware envia os dados com sendnum que podem ser visualizados em:
 https://docs.google.com/spreadsheets/d/1tDX1NalMiKmKVawsHfS7hpAf7lB5ZeHpYu0nLmau-TE/edit#gid=1687639411
  */
- 
+
 #define pinored pin_c2 //pinos para serem conectados ao led RGB
 #define pinoblue pin_c1
 #define pinogreen pin_c0
@@ -16,7 +16,7 @@ https://docs.google.com/spreadsheets/d/1tDX1NalMiKmKVawsHfS7hpAf7lB5ZeHpYu0nLmau
 unsigned char valor,valorbcd, endereco, numquant=0, temp=0;
 unsigned char  n=0, m=0, ind;
 short int envia=0;
-unsigned int i=0, w=0, time;
+unsigned int i=0, w=0, time, temperatura;
 unsigned long int incrementa=0;
 
 short int  flag=0, flagstart=0, flagNM=0, vorbei=0;
@@ -73,6 +73,7 @@ void main(){
     clock_int_48MHz();
     habilita_interrupcao(recep_serial);
     taxa_serial(9600);
+    habilita_canal_AD(AN0_a_AN1);
     bt_ini();
 
     T0CON =0B11000001; //TMR0ON, 8 bits, Prescaler 1:4 (001 - see datasheet)
@@ -86,24 +87,26 @@ void main(){
        if (envia){
        inverte_saida(pin_b7);tempo_ms (500);
        sendrw((rom char *)"https://docs.google.com/forms/d/1PZOqjnitER0m03Ix4r9gDBqhp7Xs1YrPmjLymE2VWAU/formResponse?ifq&entry.962023089=");
-       sendnum(39);
+       sendnum(le_AD10bits(0));
        sendrw((rom char *)"&entry.1468266733=");
-       sendnum(87);
+       temperatura=(420*le_AD10bits(1))/1023;
+       sendnum(temperatura);
        sendrw((rom char *)"&entry.1609904957=");
        sendnum(41);
        sendrw((rom char *)"&entry.1589284333=");
        sendnum(incrementa);
        sendrw((rom char *)"&submit=Submit*");
-        for (i=0;i<5;i++) 
+        for (i=0;i<5;i++)
               {if (envia){
-               n=0; tempo_ms(1000); inverte_saida(pin_b7);}}
+               n=0; tempo_ms(100); inverte_saida(pin_b7);}}
         // Este firmware envia os dados com sendnum que podem ser visualizados em:
         //https://docs.google.com/spreadsheets/d/1tDX1NalMiKmKVawsHfS7hpAf7lB5ZeHpYu0nLmau-TE/edit#gid=1687639411
-                   }
+        envia=0;
+                    }
 
       ++incrementa;
-      n=0; tempo_ms(500);
-     
- 
+      n=0; tempo_ms(300);
+
+
     }
 }
