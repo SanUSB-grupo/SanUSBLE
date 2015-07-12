@@ -17,7 +17,7 @@ unsigned char G=32, ru=32, po=32, e=32, Fe=32, rr=32;
 const rom unsigned char icg[] = {130,168,86,132,130,170,136,106,0};
 const rom unsigned char icp[] = {130,168,0};
 const rom unsigned char icr[] = {130,168,86,164,138,166,138,168,0};
-const rom unsigned char icb[] = {130,168,86,132,130,170,136,98,0};
+const rom unsigned char icb[] = {130,168,86,132,130,170,136,106,0};
 const rom unsigned char icm[] = {130,168,86,156,130,154,138,166,194,220,170,166,132,98,114,0};
 const rom unsigned char icn[] = {130,168,86,156,130,154,138,144,154,190,166,194,220,170,166,132,0};
 const rom unsigned char icgs[] = {130,168,86,170,130,164,168,122,98,114,100,96,96,88,96,88,96,26,20,0};  //98,114,100//102,112,104//114,108
